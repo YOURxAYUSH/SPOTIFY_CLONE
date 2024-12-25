@@ -31,7 +31,7 @@ async function displayAlbums(){
         
         const e = array[index]
         
-        if(e.href.includes("/songs")){
+        if(e.href.includes("/songs") && !e.href.includes(".htaccess")){
             let folder = e.href.split("/").slice(-2)[0]
             console.log(folder)
             let a = await fetch (`https://github.com/YOURxAYUSH/SPOTIFY_CLONE/tree/main/songs/${folder}/info.json`)
