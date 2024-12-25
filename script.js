@@ -1,4 +1,4 @@
-const BASE_URL = "https://yourxayush.github.io/SPOTIFY_CLONE";
+const BASE_URL = "https://yourxayush.github.io/SPOTIFY_CLONE"; // Base URL for GitHub Pages
 let currentSong = new Audio();
 let songs = [];
 let currFolder = "";
@@ -14,7 +14,9 @@ function secondsToMinutesSeconds(seconds) {
 
 async function fetchFolder(folder) {
     try {
+        console.log(`Fetching folder: ${BASE_URL}/${folder}`);
         const response = await fetch(`${BASE_URL}/${folder}/`);
+        if (!response.ok) throw new Error(`Failed to load folder: ${folder}`);
         return await response.text();
     } catch (error) {
         console.error(`Failed to fetch folder ${folder}:`, error);
@@ -25,6 +27,7 @@ async function fetchFolder(folder) {
 async function fetchJSON(file) {
     try {
         const response = await fetch(`${BASE_URL}/${file}`);
+        if (!response.ok) throw new Error(`Failed to fetch JSON: ${file}`);
         return await response.json();
     } catch (error) {
         console.error(`Failed to fetch JSON ${file}:`, error);
