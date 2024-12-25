@@ -57,6 +57,55 @@ async function displayAlbums() {
     }
 }
 
+// Adding the search functionality
+document.getElementById("search_input").addEventListener("input", async function() {
+    const query = this.value.toLowerCase(); // Get the query from the search bar
+
+    // If there are no songs, do nothing
+    if (!songs || songs.length === 0) return;
+
+    // Filter songs based on the search query
+    const filteredSongs = songs.filter(song => 
+        song.toLowerCase().includes(query) // Case-insensitive search
+    );
+
+    // Update the song list with filtered songs
+    const songUL = document.querySelector(".songList ul");
+    songUL.innerHTML = ""; // Clear the current list
+
+    // Display the filtered songs
+    if (filteredSongs.length > 0) {
+        filteredSongs.forEach(song => {
+            songUL.innerHTML += `
+                <li>
+                    <div class="songbox_cont">
+                        <div class="playsong_box">
+                            <img src="music.svg" alt="music" class="left_music">
+                            <div class="song_info">
+                                <div>${song.replaceAll("%20", " ")}</div>
+                                <div>AYUSH</div>
+                            </div>
+                        </div>
+                        <div class="play_it">
+                            <span>Play Now</span>
+                            <img src="play.svg" alt="play button">
+                        </div>
+                    </div>
+                </li>`;
+        });
+
+        // Add event listeners to the new dynamically added songs
+        Array.from(songUL.getElementsByTagName("li")).forEach((item, index) => {
+            item.addEventListener("click", () => {
+                playMusic(filteredSongs[index]);
+            });
+        });
+    } else {
+        songUL.innerHTML = "<li>No songs found</li>";
+    }
+});
+
+
 
 async function getSongs(folder, infoFile) {
     try {
