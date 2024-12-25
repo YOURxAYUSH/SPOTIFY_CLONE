@@ -44,8 +44,12 @@ async function displayAlbums() {
         Array.from(document.getElementsByClassName("card_song")).forEach(e => {
             e.addEventListener("click", async (item) => {
                 const folder = item.currentTarget.dataset.folder;
-                songs = await getSongs(folder, `songs/${folder}/info.json`);
-                if (songs.length > 0) playMusic(songs[0]);
+                if (folder) { // Check if folder is defined
+                    songs = await getSongs(folder, `songs/${folder}/info.json`);
+                    if (songs.length > 0) playMusic(songs[0]);
+                } else {
+                    console.error("Folder name is undefined!");
+                }
             });
         });
     } catch (error) {
@@ -53,9 +57,11 @@ async function displayAlbums() {
     }
 }
 
+
 async function getSongs(folder, infoFile) {
     try {
         currFolder = folder;
+        console.log("Fetching songs from folder:", folder);  // Debugging line
         const info = await fetchJSON(infoFile);
         if (!info || !info.songs) return [];
 
@@ -79,13 +85,6 @@ async function getSongs(folder, infoFile) {
                     </div>
                 </li>`;
         }
-
-        Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
-            e.addEventListener("click", () => {
-                const trackName = e.querySelector(".song_info div").innerText;
-                playMusic(trackName);
-            });
-        });
 
         return info.songs;
     } catch (error) {
