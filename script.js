@@ -18,7 +18,7 @@ function secondsToMinutesSeconds(seconds){
 
 async function displayAlbums(){
 
-    let a = await fetch("https://github.com/YOURxAYUSH/SPOTIFY_CLONE/tree/main/songs/");
+    let a = await fetch("/songs/");
     let response = await a.text();
     let div = document.createElement("div")
     div.innerHTML=response;
@@ -34,7 +34,7 @@ async function displayAlbums(){
         if(e.href.includes("/songs") && !e.href.includes(".htaccess")){
             let folder = e.href.split("/").slice(-2)[0]
             console.log(folder)
-            let a = await fetch (`https://github.com/YOURxAYUSH/SPOTIFY_CLONE/tree/main/songs/${folder}/info.json`)
+            let a = await fetch (`/songs/${folder}/info.json`)
             let response = await a.json()
             
 
@@ -70,7 +70,7 @@ async function getSongs(folder){
 
     currFolder = folder
 
-    let a = await fetch(`https://github.com/YOURxAYUSH/SPOTIFY_CLONE/tree/main/songs/${folder}/`);
+    let a = await fetch(`/songs/${folder}/`);
     let response = await a.text();
     let div = document.createElement("div")
     div.innerHTML=response;
