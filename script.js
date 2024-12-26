@@ -41,6 +41,18 @@ async function displayAlbums() {
                 </div>`;
         }
 
+         if (folders.length > 0) {
+            currentFolder = folders[0]; // Set the first folder as the default
+            currentFolderSongs = await getSongs(currentFolder, `songs/${currentFolder}/info.json`);
+            displaySongs(); // Display songs for the first folder
+
+        }
+
+        
+        
+        
+        
+        
         Array.from(document.getElementsByClassName("card_song")).forEach(e => {
             e.addEventListener("click", async (item) => {
                 const folder = item.currentTarget.dataset.folder;
