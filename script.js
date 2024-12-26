@@ -63,7 +63,7 @@ async function displayAlbums() {
     } catch (error) {
         console.error("Error displaying albums:", error);
     }
-}  
+}
 
 async function getSongs(folder, infoFile) {
     try {
@@ -77,12 +77,12 @@ async function getSongs(folder, infoFile) {
         songUL.innerHTML = ""; // Clear the song list
         songs.forEach((song, index) => {
             songUL.innerHTML += `
-                <li>
+                <li class="song_item">
                     <div class="songbox_cont">
                         <div class="playsong_box">
                             <img src="music.svg" alt="music" class="left_music">
                             <div class="song_info">
-                                <div>${song.replaceAll("%20", " ")}</div>
+                                <div class="song_title">${song.replaceAll("%20", " ")}</div>
                                 <div>AYUSH</div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@ async function getSongs(folder, infoFile) {
                 </li>`;
         });
 
-        const listItems = songUL.getElementsByTagName("li");
+        const listItems = songUL.getElementsByClassName("song_item");
         Array.from(listItems).forEach((item, index) => {
             item.addEventListener("click", () => {
                 playMusic(songs[index], false, folder);
@@ -139,49 +139,7 @@ function playMusic(track, pause = false, folder = currFolder) {
         console.error("Song file not found:", trackUrl);
         alert("This song is not available.");
     };
-} document.getElementById("search_input").addEventListener("input", async function () {
-    const query = this.value.toLowerCase();
-    if (!songs || songs.length === 0) return;
-
-    const filteredSongs = songs.filter(song =>
-        song.toLowerCase().includes(query)
-    );
-
-    const songUL = document.querySelector(".songList ul");
-    songUL.innerHTML = "";
-
-    if (filteredSongs.length > 0) {
-        filteredSongs.forEach((song, index) => {
-            songUL.innerHTML += `
-                <li>
-                    <div class="songbox_cont">
-                        <div class="playsong_box">
-                            <img src="music.svg" alt="music" class="left_music">
-                            <div class="song_info">
-                                <div>${song.replaceAll("%20", " ")}</div>
-                                <div>AYUSH</div>
-                            </div>
-                        </div>
-                        <div class="play_it">
-                            <span>Play Now</span>
-                            <img src="play.svg" alt="play button">
-                        </div>
-                    </div>
-                </li>`;
-        });
-
-        const listItems = songUL.getElementsByTagName("li");
-        Array.from(listItems).forEach((item, index) => {
-            item.addEventListener("click", () => {
-                playMusic(filteredSongs[index], false, currFolder);
-            });
-        });
-    } else {
-        songUL.innerHTML = "<li>No songs found</li>";
-    }
-});
-
-
+}
 
 async function main() {
     const defaultFolder = "Honey"; // Set the default folder to play music from
@@ -251,16 +209,16 @@ async function main() {
         }
     });
 
-    // Search functionality for albums
-    document.querySelector(".search").addEventListener("input", (e) => {
+    // Search functionality for song titles in the left library
+    document.querySelector("#search_input").addEventListener("input", (e) => {
         const searchTerm = e.target.value.toLowerCase();
-        const cards = document.querySelectorAll(".card_song");
-        cards.forEach(card => {
-            const title = card.querySelector("h2").textContent.toLowerCase();
-            if (title.includes(searchTerm)) {
-                card.style.display = "block"; // Show the card
+        const songItems = document.querySelectorAll(".song_item");
+        songItems.forEach(item => {
+            const songTitle = item.querySelector(".song_title").textContent.toLowerCase();
+            if (songTitle.includes(searchTerm)) {
+                item.style.display = "block"; // Show the song
             } else {
-                card.style.display = "none"; // Hide the card
+                item.style.display = "none"; // Hide the song
             }
         });
     });
