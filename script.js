@@ -165,7 +165,10 @@ function playMusic(track, pause = false, folder=currFolder) {
     }
 
     currentSong.pause();
-    currentSong.src = `${BASE_URL}/songs/${folder}/` + encodeURIComponent(track.trim());
+    const encodedtrack= encodeURIComponent(track.trim())
+    const trackUrl = `${BASE_URL}/songs/${folder}/${encodedtrack}`;
+    currentSong.src = trackUrl;
+    console.log("Playing song from url : ", trackUrl );
     currentSong.currentTime = 0;
 
     document.querySelector(".playbar_infor").innerText = track.replaceAll("%20", " ");
@@ -182,6 +185,11 @@ function playMusic(track, pause = false, folder=currFolder) {
 
     currentSong.onended = () => {
         play.src = "new.svg";
+
+currentSong.onerror = () =>{
+    console.error("Song file not found : ", trackUrl );
+    alert("This Song is not available ");
+        
     };
 }
 
