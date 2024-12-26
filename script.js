@@ -152,7 +152,7 @@ function playMusic(track, pause = false, folder = currFolder) {
 
     if (filteredSongs.length > 0) {
         filteredSongs.forEach((song, index) => {
-            songUL.innerHTML += 
+            songUL.innerHTML += `
                 <li>
                     <div class="songbox_cont">
                         <div class="playsong_box">
@@ -167,7 +167,7 @@ function playMusic(track, pause = false, folder = currFolder) {
                             <img src="play.svg" alt="play button">
                         </div>
                     </div>
-                </li>;
+                </li>`;
         });
 
         const listItems = songUL.getElementsByTagName("li");
