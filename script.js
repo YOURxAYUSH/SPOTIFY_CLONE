@@ -114,9 +114,13 @@ async function getSongs(folder, infoFile) {
         const info = await fetchJSON(infoFile);
         if (!info || !info.songs) return [];
 
+
+        songs = info.songs;
+
         const songUL = document.querySelector(".songList ul");
         songUL.innerHTML = "";
-        for (const song of info.songs) {
+        for (let i=0 ; i< songs.length; i++) {
+            const song =songs[i];
             songUL.innerHTML += `
                 <li>
                     <div class="songbox_cont">
@@ -135,14 +139,19 @@ async function getSongs(folder, infoFile) {
                 </li>`;
         }
 
-        return info.songs;
+        const songItem = songUL.lastElementChild;
+        songIem.addEventListener("click", ()=>{
+            playMusic(song, false, folder);
+        });
+
+        return songs;
     } catch (error) {
         console.error(`Error fetching songs from ${folder}:`, error);
         return [];
     }
 }
 
-function playMusic(track, pause = false) {
+function playMusic(track, pause = false, folder=currFolder) {
     if (!track || !currFolder) {
         console.error("Invalid track or folder:", track, currFolder);
         return;
@@ -170,6 +179,17 @@ function playMusic(track, pause = false) {
 }
 
 async function main() {
+
+    const defaultFolder = "Honey";  // Set the default folder to play music from
+    const defaultInfo = await fetchJSON(`songs/${defaultFolder}/info.json`);
+    if (defaultInfo) {
+        songs = await getSongs(defaultFolder, `songs/${defaultFolder}/info.json`);
+        if (songs.length > 0) {
+            let music = decodeURIComponent(songs[0]);
+            playMusic(music, true); // Load the first song without playing it
+        }
+    }
+    
 
 
 
