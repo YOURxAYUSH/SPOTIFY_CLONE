@@ -171,32 +171,10 @@ function playMusic(track, pause = false) {
 
 async function main() {
 
-await getSongs("Honey");
+let default = await fetchJSON(`songs/${Honey}/info.json`);
+    await getSongs(default)
 
-    // Check if songs were fetched
-    if (songs.length > 0) {
-        console.log("Songs fetched:", songs);
-
-        // Decode the first song's URI and play it
-        const music = decodeURI(songs[0]);
-        console.log("Playing music:", music);
-        playMusic(music, false);  // Play the first song, don't pause
-    } else {
-        console.log("No songs found in the folder.");
-    }
-}
-
-
-
-
-
-
-
-
-
-    
-    
-    await displayAlbums();
+   await displayAlbums();
 
     play.addEventListener("click", () => {
         if (currentSong.paused) {
