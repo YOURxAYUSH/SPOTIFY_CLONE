@@ -173,6 +173,9 @@ async function main() {
 
       const defaultFolder = "Honey";  // Set the default folder to play music from
     const defaultInfo = await fetchJSON(`songs/${defaultFolder}/info.json`);
+       if (defaultInfo) {
+        songs = await getSongs(defaultFolder, `songs/${defaultFolder}/info.json`);
+    }
 
     await displayAlbums();
 
