@@ -171,8 +171,7 @@ function playMusic(track, pause = false) {
 
 async function main() {
 
-let default = await fetchJSON(`songs/${Honey}/info.json`);
-    await getSongs(default)
+
 
    await displayAlbums();
 
