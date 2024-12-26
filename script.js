@@ -42,8 +42,8 @@ async function displayAlbums() {
         }
 
          if (folders.length > 0) {
-            currentFolder = folders[0]; // Set the first folder as the default
-            currentFolderSongs = await getSongs(currentFolder, `songs/${currentFolder}/info.json`);
+            currFolder = folders[0]; // Set the first folder as the default
+            currFolderSongs = await getSongs(currFolder, `songs/${currFolder}/info.json`);
             displaySongs(); // Display songs for the first folder
 
         }
