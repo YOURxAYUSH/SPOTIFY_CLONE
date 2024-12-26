@@ -41,13 +41,7 @@ async function displayAlbums() {
                 </div>`;
         }
 
-        
-        
-        
-        
-        
-        
-        Array.from(document.getElementsByClassName("card_song")).forEach(e => {
+         Array.from(document.getElementsByClassName("card_song")).forEach(e => {
             e.addEventListener("click", async (item) => {
                 const folder = item.currentTarget.dataset.folder;
                 if (folder) { // Check if folder is defined
@@ -176,6 +170,32 @@ function playMusic(track, pause = false) {
 }
 
 async function main() {
+
+await getSongs("Honey");
+
+    // Check if songs were fetched
+    if (songs.length > 0) {
+        console.log("Songs fetched:", songs);
+
+        // Decode the first song's URI and play it
+        const music = decodeURI(songs[0]);
+        console.log("Playing music:", music);
+        playMusic(music, false);  // Play the first song, don't pause
+    } else {
+        console.log("No songs found in the folder.");
+    }
+}
+
+
+
+
+
+
+
+
+
+    
+    
     await displayAlbums();
 
     play.addEventListener("click", () => {
