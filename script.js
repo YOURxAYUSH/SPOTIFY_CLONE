@@ -3,13 +3,10 @@ let currentSong = new Audio();
 let songs = [];
 let currFolder = "";
 
-const play = document.getElementById("play");
-const previous = document.getElementById("previous");
-const next = document.getElementById("next");
-const vol = document.getElementById("vol");
-
 function secondsToMinutesSeconds(seconds) {
-    if (isNaN(seconds) || seconds < 0) return "00:00";
+    if (isNaN(seconds) || seconds < 0) {
+        return "00:00";
+    }
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.floor(seconds % 60);
     return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
@@ -29,7 +26,7 @@ async function fetchJSON(file) {
 async function displayAlbums() {
     try {
         const squareContainer = document.querySelector(".square_container");
-        const folders = ["Honey", "Arijit", "Badshah", "Diljit Dosanjh", "Karan Aujla", "Lua Dipa"];
+        const folders = ["Honey", "Arijit", "Badshah", "Diljit Dosanjh", "Karan Aujla", "Lua Dipa"]; // Add your folder names here manually
 
         for (const folder of folders) {
             const info = await fetchJSON(`songs/${folder}/info.json`);
@@ -66,9 +63,11 @@ async function getSongs(folder, infoFile) {
         const info = await fetchJSON(infoFile);
         if (!info || !info.songs) return [];
 
+        songs = info.songs;
+
         const songUL = document.querySelector(".songList ul");
-        songUL.innerHTML = "";
-        for (const song of info.songs) {
+        songUL.innerHTML = ""; // Clear the song list
+        songs.forEach((song, index) => {
             songUL.innerHTML += `
                 <li>
                     <div class="songbox_cont">
@@ -85,13 +84,16 @@ async function getSongs(folder, infoFile) {
                         </div>
                     </div>
                 </li>`;
+        });
 
-            const songItem = songUL.lastElementChild;
-            songItem.addEventListener("click", () => {
-                playMusic(song, false, folder);
+        const listItems = songUL.getElementsByTagName("li");
+        Array.from(listItems).forEach((item, index) => {
+            item.addEventListener("click", () => {
+                playMusic(songs[index], false, folder);
             });
-        }
-        return info.songs;
+        });
+
+        return songs;
     } catch (error) {
         console.error(`Error fetching songs from ${folder}:`, error);
         return [];
@@ -104,9 +106,9 @@ function playMusic(track, pause = false, folder = currFolder) {
         return;
     }
 
-    currentSong.pause();
+    currentSong.pause(); // Pause any currently playing song
     const trackUrl = `${BASE_URL}/songs/${folder}/${encodeURIComponent(track.trim())}`;
-    currentSong.src = trackUrl;
+    currentSong.src = trackUrl; // Set the new track source
     currentSong.currentTime = 0;
 
     document.querySelector(".playbar_infor").innerText = track.replaceAll("%20", " ");
@@ -116,9 +118,9 @@ function playMusic(track, pause = false, folder = currFolder) {
         currentSong.play().catch((error) => {
             console.error("Error during playback:", error);
         });
-        play.src = "pause.svg";
+        play.src = "pause.svg"; // Change button to "Pause"
     } else {
-        play.src = "new.svg";
+        play.src = "new.svg"; // Change button to "Play"
     }
 
     currentSong.onended = () => {
@@ -127,17 +129,18 @@ function playMusic(track, pause = false, folder = currFolder) {
 
     currentSong.onerror = () => {
         console.error("Song file not found:", trackUrl);
-        alert("This Song is not available.");
+        alert("This song is not available.");
     };
 }
 
 async function main() {
-    const defaultFolder = "Honey";
+    const defaultFolder = "Honey"; // Set the default folder to play music from
     const defaultInfo = await fetchJSON(`songs/${defaultFolder}/info.json`);
     if (defaultInfo) {
         songs = await getSongs(defaultFolder, `songs/${defaultFolder}/info.json`);
         if (songs.length > 0) {
-            playMusic(songs[0], true);
+            let music = decodeURIComponent(songs[0]);
+            playMusic(music, true); // Load the first song without playing it
         }
     }
 
@@ -157,7 +160,7 @@ async function main() {
         const current = currentSong.currentTime;
         const total = currentSong.duration;
         document.querySelector(".songtime").innerText = `${secondsToMinutesSeconds(current)} / ${secondsToMinutesSeconds(total)}`;
-        document.querySelector(".circle").style.left = `${(current / total) * 100}%`;
+        document.querySelector(".circle").style.left = (current / total) * 100 + "%";
     });
 
     document.querySelector(".seekbar").addEventListener("click", (e) => {
