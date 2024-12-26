@@ -63,7 +63,7 @@ async function displayAlbums() {
     } catch (error) {
         console.error("Error displaying albums:", error);
     }
-}
+}  
 
 async function getSongs(folder, infoFile) {
     try {
@@ -139,7 +139,49 @@ function playMusic(track, pause = false, folder = currFolder) {
         console.error("Song file not found:", trackUrl);
         alert("This song is not available.");
     };
-}
+} document.getElementById("search_input").addEventListener("input", async function () {
+    const query = this.value.toLowerCase();
+    if (!songs || songs.length === 0) return;
+
+    const filteredSongs = songs.filter(song =>
+        song.toLowerCase().includes(query)
+    );
+
+    const songUL = document.querySelector(".songList ul");
+    songUL.innerHTML = "";
+
+    if (filteredSongs.length > 0) {
+        filteredSongs.forEach((song, index) => {
+            songUL.innerHTML += 
+                <li>
+                    <div class="songbox_cont">
+                        <div class="playsong_box">
+                            <img src="music.svg" alt="music" class="left_music">
+                            <div class="song_info">
+                                <div>${song.replaceAll("%20", " ")}</div>
+                                <div>AYUSH</div>
+                            </div>
+                        </div>
+                        <div class="play_it">
+                            <span>Play Now</span>
+                            <img src="play.svg" alt="play button">
+                        </div>
+                    </div>
+                </li>;
+        });
+
+        const listItems = songUL.getElementsByTagName("li");
+        Array.from(listItems).forEach((item, index) => {
+            item.addEventListener("click", () => {
+                playMusic(filteredSongs[index], false, currFolder);
+            });
+        });
+    } else {
+        songUL.innerHTML = "<li>No songs found</li>";
+    }
+});
+
+
 
 async function main() {
     const defaultFolder = "Honey"; // Set the default folder to play music from
