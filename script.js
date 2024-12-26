@@ -2,6 +2,7 @@ const BASE_URL = "https://yourxayush.github.io/SPOTIFY_CLONE";
 let currentSong = new Audio();
 let songs = [];
 let currFolder = "";
+let albumsRendered = false; // Prevent multiple album renders
 
 function secondsToMinutesSeconds(seconds) {
     if (isNaN(seconds) || seconds < 0) {
@@ -24,6 +25,8 @@ async function fetchJSON(file) {
 }
 
 async function displayAlbums() {
+    if (albumsRendered) return; // Prevent rendering albums again if already rendered
+
     try {
         const squareContainer = document.querySelector(".square_container");
         const folders = ["Honey", "Arijit", "Badshah", "Diljit Dosanjh", "Karan Aujla", "Lua Dipa"]; // Add your folder names here manually
@@ -55,6 +58,8 @@ async function displayAlbums() {
                 }
             });
         });
+
+        albumsRendered = true; // Mark albums as rendered
     } catch (error) {
         console.error("Error displaying albums:", error);
     }
