@@ -3,10 +3,13 @@ let currentSong = new Audio();
 let songs = [];
 let currFolder = "";
 
+const play = document.getElementById("play");
+const previous = document.getElementById("previous");
+const next = document.getElementById("next");
+const vol = document.getElementById("vol");
+
 function secondsToMinutesSeconds(seconds) {
-    if (isNaN(seconds) || seconds < 0) {
-        return "00:00";
-    }
+    if (isNaN(seconds) || seconds < 0) return "00:00";
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.floor(seconds % 60);
     return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
@@ -26,7 +29,7 @@ async function fetchJSON(file) {
 async function displayAlbums() {
     try {
         const squareContainer = document.querySelector(".square_container");
-        const folders = ["Honey", "Arijit", "Badshah", "Diljit Dosanjh", "Karan Aujla", "Lua Dipa"]; // Add your folder names here manually
+        const folders = ["Honey", "Arijit", "Badshah", "Diljit Dosanjh", "Karan Aujla", "Lua Dipa"];
 
         for (const folder of folders) {
             const info = await fetchJSON(`songs/${folder}/info.json`);
@@ -41,10 +44,10 @@ async function displayAlbums() {
                 </div>`;
         }
 
-         Array.from(document.getElementsByClassName("card_song")).forEach(e => {
+        Array.from(document.getElementsByClassName("card_song")).forEach(e => {
             e.addEventListener("click", async (item) => {
                 const folder = item.currentTarget.dataset.folder;
-                if (folder) { // Check if folder is defined
+                if (folder) {
                     songs = await getSongs(folder, `songs/${folder}/info.json`);
                     if (songs.length > 0) playMusic(songs[0]);
                 } else {
@@ -57,70 +60,15 @@ async function displayAlbums() {
     }
 }
 
-// Adding the search functionality
-document.getElementById("search_input").addEventListener("input", async function() {
-    const query = this.value.toLowerCase(); // Get the query from the search bar
-
-    // If there are no songs, do nothing
-    if (!songs || songs.length === 0) return;
-
-    // Filter songs based on the search query
-    const filteredSongs = songs.filter(song => 
-        song.toLowerCase().includes(query) // Case-insensitive search
-    );
-
-    // Update the song list with filtered songs
-    const songUL = document.querySelector(".songList ul");
-    songUL.innerHTML = ""; // Clear the current list
-
-    // Display the filtered songs
-    if (filteredSongs.length > 0) {
-        filteredSongs.forEach(song => {
-            songUL.innerHTML += `
-                <li>
-                    <div class="songbox_cont">
-                        <div class="playsong_box">
-                            <img src="music.svg" alt="music" class="left_music">
-                            <div class="song_info">
-                                <div>${song.replaceAll("%20", " ")}</div>
-                                <div>AYUSH</div>
-                            </div>
-                        </div>
-                        <div class="play_it">
-                            <span>Play Now</span>
-                            <img src="play.svg" alt="play button">
-                        </div>
-                    </div>
-                </li>`;
-        });
-
-        // Add event listeners to the new dynamically added songs
-        Array.from(songUL.getElementsByTagName("li")).forEach((item, index) => {
-            item.addEventListener("click", () => {
-                playMusic(filteredSongs[index]);
-            });
-        });
-    } else {
-        songUL.innerHTML = "<li>No songs found</li>";
-    }
-});
-
-
-
 async function getSongs(folder, infoFile) {
     try {
         currFolder = folder;
-        console.log("Fetching songs from folder:", folder);  // Debugging line
         const info = await fetchJSON(infoFile);
         if (!info || !info.songs) return [];
 
-
-        songs = info.songs;
-
         const songUL = document.querySelector(".songList ul");
         songUL.innerHTML = "";
-        for (let i=0 ; i< songs.length; i++) {
-            const song =songs[i];
+        for (const song of info.songs) {
             songUL.innerHTML += `
                 <li>
                     <div class="songbox_cont">
@@ -138,37 +86,27 @@ async function getSongs(folder, infoFile) {
                     </div>
                 </li>`;
 
-
-              const songItem = songUL.lastElementChild;
-        songItem.addEventListener("click", ()=>{
-            playMusic(song, false, folder);
-        });
-
-
-            
+            const songItem = songUL.lastElementChild;
+            songItem.addEventListener("click", () => {
+                playMusic(song, false, folder);
+            });
         }
-
-      
-        
-
-        return songs;
+        return info.songs;
     } catch (error) {
         console.error(`Error fetching songs from ${folder}:`, error);
         return [];
     }
 }
 
-function playMusic(track, pause = false, folder=currFolder) {
+function playMusic(track, pause = false, folder = currFolder) {
     if (!track || !folder) {
         console.error("Invalid track or folder:", track, folder);
         return;
     }
 
     currentSong.pause();
-    const encodedtrack= encodeURIComponent(track.trim())
-    const trackUrl = `${BASE_URL}/songs/${folder}/${encodedtrack}`;
+    const trackUrl = `${BASE_URL}/songs/${folder}/${encodeURIComponent(track.trim())}`;
     currentSong.src = trackUrl;
-    console.log("Playing song from url : ", trackUrl );
     currentSong.currentTime = 0;
 
     document.querySelector(".playbar_infor").innerText = track.replaceAll("%20", " ");
@@ -185,28 +123,23 @@ function playMusic(track, pause = false, folder=currFolder) {
 
     currentSong.onended = () => {
         play.src = "new.svg";
+    };
 
-currentSong.onerror = () =>{
-    console.error("Song file not found : ", trackUrl );
-    alert("This Song is not available ");
-        
+    currentSong.onerror = () => {
+        console.error("Song file not found:", trackUrl);
+        alert("This Song is not available.");
     };
 }
 
 async function main() {
-
-    const defaultFolder = "Honey";  // Set the default folder to play music from
+    const defaultFolder = "Honey";
     const defaultInfo = await fetchJSON(`songs/${defaultFolder}/info.json`);
     if (defaultInfo) {
         songs = await getSongs(defaultFolder, `songs/${defaultFolder}/info.json`);
         if (songs.length > 0) {
-            let music = decodeURIComponent(songs[0]);
-            playMusic(music, true); // Load the first song without playing it
+            playMusic(songs[0], true);
         }
     }
-    
-
-
 
     await displayAlbums();
 
@@ -224,7 +157,7 @@ async function main() {
         const current = currentSong.currentTime;
         const total = currentSong.duration;
         document.querySelector(".songtime").innerText = `${secondsToMinutesSeconds(current)} / ${secondsToMinutesSeconds(total)}`;
-        document.querySelector(".circle").style.left = (current / total) * 100 + "%";
+        document.querySelector(".circle").style.left = `${(current / total) * 100}%`;
     });
 
     document.querySelector(".seekbar").addEventListener("click", (e) => {
