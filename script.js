@@ -176,7 +176,8 @@ async function main() {
      if (defaultInfo) {
         songs = await getSongs(defaultFolder, `songs/${defaultFolder}/info.json`);
         if (songs.length > 0) {
-            playMusic(songs[0], true); // Load the first song without playing it
+            let music= decodeURIComponent(songs[0])
+            playMusic(music, false); // Load the first song without playing it
         }
     }
 
