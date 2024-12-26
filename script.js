@@ -41,11 +41,12 @@ async function displayAlbums() {
                 </div>`;
         }
 
-         if (folders.length > 0) {
+          if (folders.length > 0) {
             currFolder = folders[0]; // Set the first folder as the default
+            console.log("Default folder:", currFolder); // Log the selected folder
             currFolderSongs = await getSongs(currFolder, `songs/${currFolder}/info.json`);
+            console.log("Fetched songs:", currFolderSongs); // Log the fetched songs
             displaySongs(); // Display songs for the first folder
-
         }
 
         
