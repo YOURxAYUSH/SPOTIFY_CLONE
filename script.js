@@ -171,6 +171,9 @@ function playMusic(track, pause = false) {
 
 async function main() {
 
+      const defaultFolder = "Honey";  // Set the default folder to play music from
+    const defaultInfo = await fetchJSON(`songs/${defaultFolder}/info.json`);
+
     await displayAlbums();
 
     play.addEventListener("click", () => {
