@@ -137,12 +137,19 @@ async function getSongs(folder, infoFile) {
                         </div>
                     </div>
                 </li>`;
-        }
 
-        const songItem = songUL.lastElementChild;
-        songIem.addEventListener("click", ()=>{
+
+              const songItem = songUL.lastElementChild;
+        songItem.addEventListener("click", ()=>{
             playMusic(song, false, folder);
         });
+
+
+            
+        }
+
+      
+        
 
         return songs;
     } catch (error) {
