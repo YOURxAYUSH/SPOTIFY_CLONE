@@ -159,13 +159,13 @@ async function getSongs(folder, infoFile) {
 }
 
 function playMusic(track, pause = false, folder=currFolder) {
-    if (!track || !currFolder) {
-        console.error("Invalid track or folder:", track, currFolder);
+    if (!track || !folder) {
+        console.error("Invalid track or folder:", track, folder);
         return;
     }
 
     currentSong.pause();
-    currentSong.src = `${BASE_URL}/songs/${currFolder}/` + encodeURIComponent(track.trim());
+    currentSong.src = `${BASE_URL}/songs/${folder}/` + encodeURIComponent(track.trim());
     currentSong.currentTime = 0;
 
     document.querySelector(".playbar_infor").innerText = track.replaceAll("%20", " ");
