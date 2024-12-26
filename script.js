@@ -171,9 +171,7 @@ function playMusic(track, pause = false) {
 
 async function main() {
 
-
-
-   await displayAlbums();
+    await displayAlbums();
 
     play.addEventListener("click", () => {
         if (currentSong.paused) {
