@@ -171,15 +171,7 @@ function playMusic(track, pause = false) {
 
 async function main() {
 
-      const defaultFolder = "Honey";  // Set the default folder to play music from
-    const defaultInfo = await fetchJSON(`songs/${defaultFolder}/info.json`);
-     if (defaultInfo) {
-        songs = await getSongs(defaultFolder, `songs/${defaultFolder}/info.json`);
-        if (songs.length > 0) {
-            let music= decodeURIComponent(songs[0])
-            playMusic(music, true); // Load the first song without playing it
-        }
-    }
+
 
     await displayAlbums();
 
