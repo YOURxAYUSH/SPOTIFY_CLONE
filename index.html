@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title style="background-color: black;">SPOTIFY--BY AYUSH VARSHNEY</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title style="background-color: black;">GeetBox --BY AYUSH VARSHNEY</title>
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,11 +12,19 @@
 <body>
     <div class="container">
         <div class="left">
-            <img class="logo" src="logo.svg" alt="spotify logo">
+        <div>
+            <img src="close.svg" alt="close" class="close">
+        </div>
+            
+        
+            
+            <img class="logo" src="favicon2.ico" alt="spotify logo">
+            <span class="geetbox">GeetBox</span>
 
+       
             <div class="div_home">
                 <img class="home" src="home.svg" alt="home image">
-                <h6>Home</h6>
+                <h6 class="Goback">Home</h6>
             </div>
 
             <label for="search_input">
@@ -41,7 +49,7 @@
             </div>
            
 
-            <div class="footer">
+            <!-- <div class="footer">
                 <div class="first_footer">
                     <span>Legal</span>
                     <span>Safety & Privacy Center</span>
@@ -53,18 +61,21 @@
                     <span>About Ads</span>
                 </div>
                 <div class="cookies">Cookies</div>
-            </div>
+            </div> -->
         </div>
 
         <div class="right">
             <div class="header">
 
+                <img src="hamburger.svg" alt="hamburger" class="hamburger" id="ayush">
+                 <div >
                 <button class="signup_btn">Sign up</button>&nbsp; &nbsp;
                 <button class="login_btn">Log in</button>
             </div>
+            </div>
 
             <div class="header_lower">
-                <h1>Spotify Playlist</h1>
+                <h1>"Discover Songs, Share Joy" </h1>
 
                 <div class="square_container">
                    
@@ -90,9 +101,11 @@
                <img id="play" class="new_svg" src="new.svg" alt="play">
                <img id="next" src="nextsong.svg" alt="next">
             </div>
+            <div class="app">
             <div class="songtime"></div>
             <img src="volume.svg" alt="volume" class="volume">
             <input type="range" name="volumeincrease" id="vol">
+        </div>
         </div>
             
             <div class="seekbar">

@@ -29,7 +29,7 @@ async function displayAlbums() {
 
     try {
         const squareContainer = document.querySelector(".square_container");
-        const folders = ["Honey", "Arijit", "Badshah", "Diljit Dosanjh", "Karan Aujla", "Lua Dipa"]; // Add your folder names here manually
+        const folders = ["Honey", "Arijit", "Badshah", "Diljit Dosanjh", "Karan Aujla", "Lua Dipa", "Shubh"]; // Add your folder names here manually
 
         // Clear existing content to avoid duplication
         squareContainer.innerHTML = "";
@@ -83,7 +83,7 @@ async function getSongs(folder, infoFile) {
                             <img src="music.svg" alt="music" class="left_music">
                             <div class="song_info">
                                 <div class="song_title">${song.replaceAll("%20", " ")}</div>
-                                <div>AYUSH</div>
+                                <div>SHOURYA</div>
                             </div>
                         </div>
                         <div class="play_it">
@@ -222,6 +222,23 @@ async function main() {
             }
         });
     });
+
+   ayush.addEventListener("click", ()=>{
+    document.querySelector(".left").style.left=0;
+   })
+   
+   document.querySelector(".close").addEventListener("click", ()=>{
+            document.querySelector(".left").style.left="-100%";
+   })
+   
+   document.querySelector(".home").addEventListener("click", ()=>{
+    document.querySelector(".left").style.left="-100%";
+})
+
+document.querySelector(".Goback").addEventListener("click", ()=>{
+    document.querySelector(".left").style.left="-100%";
+})
+
 }
 
 main();
