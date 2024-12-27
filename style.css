@@ -632,7 +632,9 @@ body{
     .right{
          position:fixed;
         width:100vw;
-        height:fit-content;
+        height:100vh;
+        background-color:black;
+        
         
         margin-right:0px;
         
@@ -735,7 +737,8 @@ body{
             flex-wrap: wrap;
             justify-content: safe;
             align-items:center;
-            height:56vh;
+            height:100vh;
+            background-color:black;
             overflow-y : scroll;
             margin-right:12px;
             padding-bottom:10px;
@@ -759,11 +762,16 @@ body{
         /* border:1px solid white; */
         background-color: #252525;
         position:relative;
-        z-index:7;
+        
         padding:0px;
         border-radius:10px;
         cursor:pointer;
+        
     
+    }
+
+    .card_song:last-child{
+        margin-bottom:450px;
     }
  
     .card_song  img:nth-child(2){
@@ -789,7 +797,7 @@ body{
         padding:10px;
        color:aliceblue;
         width:50vw;
-        height:3vh;
+        height:2.8vh;
         margin-left:5px;
         overflow-y:hidden;
         font-size:11px;
@@ -816,7 +824,7 @@ body{
         transition:all 0.3s ease;
         box-shadow: 2px 3px 2px 3px aliceblue;
         position:relative;
-        z-index:1;
+        z-index:7;
         --a:1;
         --b:250px;
     }
