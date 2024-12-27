@@ -121,6 +121,8 @@ body{
     margin-left: 10px;
     
     width:40px;
+
+    
     
 }
 .home{
@@ -305,8 +307,7 @@ body{
     background-color: #181818;
     transition:all 0.8s;
     box-shadow: 2px 3px 2px 3px aliceblue;
-    position:relative;
-    z-index:1;
+    
     --a:1;
 }
 
@@ -767,6 +768,7 @@ body{
         border-radius:10px;
         cursor:pointer;
         
+        
     
     }
 
@@ -822,9 +824,7 @@ body{
     .card_song:hover{
         background-color: #181818;
         transition:all 0.3s ease;
-        box-shadow: 2px 3px 2px 3px aliceblue;
-        position:relative;
-        z-index:7;
+       box-shadow:2px 3px 2px 3px aliceblue;
         --a:1;
         --b:250px;
     }
@@ -841,7 +841,7 @@ body{
      .playbar_infor{
         color:whitesmoke;
         width:80vw;
-        height:2vh;
+        height:1.8vh;
         padding:5px;
         margin-left:0px;
         overflow-y:hidden;
@@ -931,7 +931,7 @@ body{
 
      .div_search{
         margin-top:30px;
-        height:3vh;
+        height:4.5vh;
         width:64vw;
         margin-left:3px;
      }
@@ -939,6 +939,8 @@ body{
      .library_image{
         width:30px;
      }
+
+     
 
 .songList ul{
     margin-left:4px;

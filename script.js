@@ -132,7 +132,18 @@ function playMusic(track, pause = false, folder = currFolder) {
     }
 
     currentSong.onended = () => {
-        play.src = "new.svg";
+        play.src = "new.svg"; // Change the play button to "Play"
+    
+        const currentIndex = songs.indexOf(decodeURIComponent(currentSong.src.split("/").pop()));
+        if (currentIndex >= 0 && currentIndex < songs.length - 1) {
+            // Play the next song if it's not the last song
+            playMusic(songs[currentIndex + 1]);
+        } else {
+            // If it's the last song, reset to the first song (optional)
+            playMusic(songs[0]);
+        }
+    
+
     };
 
     currentSong.onerror = () => {
