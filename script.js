@@ -29,7 +29,7 @@ async function displayAlbums() {
 
     try {
         const squareContainer = document.querySelector(".square_container");
-        const folders = ["Honey", "Arijit", "Badshah", "Diljit Dosanjh", "Karan Aujla", "Lua Dipa", "Shubh", "ANUV", "NYOLIWALA", "SHREYA", "MASOOM", "AP DHILLON"]; // Add your folder names here manually
+        const folders = ["Honey", "Arijit", "Badshah", "Diljit Dosanjh", "Karan Aujla", "Lua Dipa", "Shubh", "ANUV", "OLD SONGS", "SHREYA", "AP DHILLON", "NYOLIWALA" , "MASOOM"]; // Add your folder names here manually
 
         // Clear existing content to avoid duplication
         squareContainer.innerHTML = "";
